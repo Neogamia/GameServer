@@ -15,25 +15,12 @@ const cluster = new cassandra.Client({
     keyspace: 'users'
 });
 
-app.get('/status', (req, res) => {
-    res.json({ 'Status': 'Running'});
-});
-
-const playerLoc = {
-    id: 0,
-    x: 0,
-    y: 0,
-    z: 0,
-}
-
 io.on('connection', (socket) => {
     console.log(`Player with session id ${socket.id} joined`);
 
-    
-
-    socket.on('playerLocation', (x, y, z) => {
-        playerLoc[socket.id, x, y, z];
-    });
+    socket.on('transferClientData', (data) => {
+        console.log(`user with session id ${socket.id} is running client version ${data}`)
+    })
 
     socket.on("disconnect", () => {
         console.log(`Player with session id ${socket.id} disconnected`);
